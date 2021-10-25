@@ -8,14 +8,17 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/", testWorking)
-	router.POST("/signup", signupUser)
-	router.POST("/login", loginUser)
-	router.POST("/validate", validateToken)
-	router.POST("/buy", buyBitcoin)
-	router.POST("/sell", sellBitcoin)
+	v1 := router.Group("api/v1")
 
-	router.GET("/users", getUsers)
-	router.GET("/transactions", getTransactions)
+	v1.POST("/signup", signupUser)
+	v1.POST("/login", loginUser)
+	v1.POST("/validate", validateToken)
+	v1.POST("/buy", buyBitcoin)
+	v1.POST("/sell", sellBitcoin)
+
+	// urls for debugging purposes
+	v1.GET("/users", getUsers)
+	v1.GET("/transactions", getTransactions)
 
 	router.Run(":8000")
 }

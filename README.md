@@ -157,6 +157,10 @@ export PATH=$PATH:$(dirname $(go list -f '{{.Target}}' .)) # to add the go bin's
 - A standalone program (as opposed to a library) is always in package main.
 - As you might know, Go requires all exported fields to start with a capitalized letter.
 
+## Docker commands:
+`docker build --tag docker-gs-bitcoin .`
+`docker run -p 8000:8000 docker-gs-bitcoin`
+
 
 
 
