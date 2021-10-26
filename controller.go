@@ -125,6 +125,16 @@ func sellBitcoin(c *gin.Context) {
 	c.JSON(http.StatusOK, userptr)
 }
 
+func getUser(c *gin.Context) {
+	userptr, err := doTokenAuthentication(c)
+	if err != nil {
+		fmt.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, userptr)
+}
+
 func getUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, &users)
 }
