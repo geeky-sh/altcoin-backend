@@ -87,14 +87,13 @@ func buyBitcoin(c *gin.Context) {
 		return
 	}
 
-	transactionAmount := transactionRequest.BitcoinAmount * transactionRequest.BitcoinPrice
-	if (*userptr).WalletAmount < transactionAmount {
+	if (*userptr).WalletAmount < transactionRequest.BitcoinValue {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Insufficient funds"})
 		return
 	}
 
 	transactionptr := CreateTransaction(
-		(*userptr).Username, "buy", transactionRequest.BitcoinAmount, transactionRequest.BitcoinPrice)
+		(*userptr).Username, "buy", transactionRequest.BitcoinAmount, transactionRequest.BitcoinValue)
 	UpdateUser(userptr, transactionptr)
 
 	c.JSON(http.StatusOK, userptr)
@@ -120,7 +119,7 @@ func sellBitcoin(c *gin.Context) {
 	}
 
 	transactionptr := CreateTransaction(
-		(*userptr).Username, "sell", transactionRequest.BitcoinAmount, transactionRequest.BitcoinPrice)
+		(*userptr).Username, "sell", transactionRequest.BitcoinAmount, transactionRequest.BitcoinValue)
 	UpdateUser(userptr, transactionptr)
 
 	c.JSON(http.StatusOK, userptr)

@@ -6,7 +6,7 @@ type UserRequest struct {
 }
 
 type TransactionRequest struct {
-	BitcoinPrice  float32 `json:"bitcoin_price"`
+	BitcoinValue  float32 `json:"bitcoin_value"`
 	BitcoinAmount float32 `json:"bitcoin_amount"`
 }
 
@@ -25,7 +25,7 @@ type Transaction struct {
 	Ttype         string  `json:"ttype"`
 	Username      string  `json:"username"`
 	BitcoinAmount float32 `json:"bitcoin_amount"`
-	BitcoinPrice  float32 `json:"bitcoin_price"`
+	BitcoinValue  float32 `json:"bitcoin_value"`
 	CreatedAt     int64   `json:"created_at"`
 }
 
@@ -43,9 +43,9 @@ func findUserByUserName(username string) *User {
 	return nil
 }
 
-func CreateTransaction(username string, ttype string, bitcoinAmount float32, bitcoinPrice float32) *Transaction {
+func CreateTransaction(username string, ttype string, bitcoinAmount float32, BitcoinValue float32) *Transaction {
 	transaction := Transaction{
-		Username: username, BitcoinPrice: bitcoinPrice,
+		Username: username, BitcoinValue: BitcoinValue,
 		BitcoinAmount: bitcoinAmount, Ttype: ttype}
 	transactions = append(transactions, transaction)
 	return &transaction
@@ -54,10 +54,10 @@ func CreateTransaction(username string, ttype string, bitcoinAmount float32, bit
 func UpdateUser(user *User, transaction *Transaction) {
 	if transaction.Ttype == "sell" {
 		user.BitcoinAmount = user.BitcoinAmount - transaction.BitcoinAmount
-		user.WalletAmount = user.WalletAmount + (transaction.BitcoinAmount * transaction.BitcoinPrice)
+		user.WalletAmount = user.WalletAmount + transaction.BitcoinValue
 	} else {
 		user.BitcoinAmount = user.BitcoinAmount + transaction.BitcoinAmount
-		user.WalletAmount = user.WalletAmount - (transaction.BitcoinAmount * transaction.BitcoinPrice)
+		user.WalletAmount = user.WalletAmount - transaction.BitcoinValue
 	}
 
 	var t User

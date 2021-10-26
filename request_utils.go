@@ -27,8 +27,7 @@ func doTokenAuthentication(c *gin.Context) (*User, error) {
 }
 
 func canBuyBitcoin(transactionRequest *TransactionRequest, user *User) bool {
-	transactionAmount := transactionRequest.BitcoinAmount * transactionRequest.BitcoinPrice
-	return user.WalletAmount >= transactionAmount
+	return user.WalletAmount >= transactionRequest.BitcoinValue
 }
 
 func canSellBitcoin(transactionRequest *TransactionRequest, user *User) bool {
